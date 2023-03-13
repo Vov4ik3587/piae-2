@@ -32,7 +32,7 @@ def check_optimal_plan(D):
 
 def draw_plan(n, x, p):
     x1 = np.array(
-        [x[i][0]for i in range(n) if p[i] != 0]
+        [x[i][0] for i in range(n) if p[i] != 0]
     )
     x2 = np.array(
         [x[i][1] for i in range(n) if p[i] != 0]
@@ -102,18 +102,19 @@ def gradient_descent(n, x, p):
 
     print("Solution:", file=out)
     print("\nIteration =", iteration, file=out)
-    print("\np:", file=out)
+    print("\nx1: \t x2: \t p:", file=out)
     for i in range(0, n):
-        print(p[i], file=out)
+        if p[i] != 0:
+            print(f'{x[i][0]} \t {x[i][1]} \t {p[i]}', file=out)
     print("\nSolution F2-criteria =", -1 * F2_optim(M), file=out)
     print("|proj|=", np.linalg.norm(proj), file=out)
 
     print("\nChecking:", file=out)
     max_tr = check_optimal_plan(D)
     print("max_trace =", max_tr, file=out)
-
+    goal = np.trace(np.linalg.matrix_power(D, 2))
+    print(f'trace D^2 = {goal}', file=out)
     draw_plan(n, x, p)
-
 
 
 # Построим начальный план
