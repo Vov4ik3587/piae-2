@@ -5,6 +5,7 @@
 # Строить Ф2 оптимальный план, неполный вариант комбинированного алгоритма
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def model(x1, x2):
@@ -29,11 +30,25 @@ def check_optimal_plan(D):
     return max_functional
 
 
+def draw_plan(n, x, p):
+    x1 = np.array(
+        [x[i][0]for i in range(n) if p[i] != 0]
+    )
+    x2 = np.array(
+        [x[i][1] for i in range(n) if p[i] != 0]
+    )
+    plt.scatter(x1, x2)
+    plt.xlabel('x1')
+    plt.ylabel('x2')
+    plt.show()
+
+
 # Функция градиентного спуска по весам плана
 def gradient_descent(n, x, p):
     proj = np.zeros(n)
     grad = np.zeros(n)
     out = open("output.txt", "w")
+    draw_plan(n, x, p)
     solution = 0
     iteration = 0
     while solution == 0:
@@ -96,6 +111,9 @@ def gradient_descent(n, x, p):
     print("\nChecking:", file=out)
     max_tr = check_optimal_plan(D)
     print("max_trace =", max_tr, file=out)
+
+    draw_plan(n, x, p)
+
 
 
 # Построим начальный план
